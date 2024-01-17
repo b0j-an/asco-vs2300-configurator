@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&family=Poppins:wght@200;400;700;900&family=Roboto:ital,wght@0,400;0,500;1,300&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&family=Poppins:wght@200;400;700;900&family=Roboto:ital,wght@0,400;0,500;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 .App {
   width: 100vw;
@@ -113,7 +113,7 @@ p {
 }
 
 .btn::before {
-  content: "";
+  content: '';
   position: absolute;
   height: 40px;
   width: 0%;
@@ -231,7 +231,7 @@ p {
 .popup-arrow {
   color: transparent;
 }
-[role="tooltip"].popup-content {
+[role='tooltip'].popup-content {
   width: 200px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
 }
@@ -239,7 +239,7 @@ p {
 .popup-overlay {
   background: rgba(0, 0, 0, 0.5);
 }
-[data-popup="tooltip"].popup-overlay {
+[data-popup='tooltip'].popup-overlay {
   background: rgba(0, 0, 0, 0.36);
 }
 
@@ -321,5 +321,5 @@ p {
   box-shadow: inset 250px 0 0 0 white;
   color: black;
   font-size: 10em;
-  content: "a";
+  content: 'a';
 }

@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import React, { useEffect, useRef, useState } from 'react';
+import { useGLTF, useAnimations } from '@react-three/drei';
 
 export function Model({ meshVisible, ...props }) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF("/model-transformed.glb");
+  const { nodes, materials, animations } = useGLTF(
+    '/asco-vs2300-configurator/model-transformed.glb'
+  );
   const { actions } = useAnimations(animations, group);
   // console.log(animations);
   // onClick={(e) => actions.switch.play()
@@ -21,7 +23,7 @@ export function Model({ meshVisible, ...props }) {
 
   useEffect(() => {
     if (props.pause === true) {
-      console.log("desilo se nesto");
+      console.log('desilo se nesto');
       actions.switch.halt(1);
     } else {
       // console.log("props pause je false");
@@ -29,16 +31,9 @@ export function Model({ meshVisible, ...props }) {
   }, [props.pause]);
 
   return (
-    <group
-      ref={group}
-      {...props}
-      dispose={null}
-    >
+    <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group
-          name="Desna_noga"
-          position={[0.005, 0.574, -1.2]}
-        >
+        <group name="Desna_noga" position={[0.005, 0.574, -1.2]}>
           <mesh
             receiveShadow
             castShadow
@@ -102,10 +97,7 @@ export function Model({ meshVisible, ...props }) {
             material={materials.RAL6018}
           />
         </group>
-        <group
-          name="Greda"
-          position={[-0.147, 1.154, 0]}
-        >
+        <group name="Greda" position={[-0.147, 1.154, 0]}>
           <mesh
             receiveShadow
             castShadow
@@ -121,10 +113,7 @@ export function Model({ meshVisible, ...props }) {
             material={materials.PaletteMaterial001}
           />
         </group>
-        <group
-          name="Jedno_sito"
-          position={[-0.01, 1.638, -0.003]}
-        >
+        <group name="Jedno_sito" position={[-0.01, 1.638, -0.003]}>
           <mesh
             receiveShadow
             castShadow
@@ -168,10 +157,7 @@ export function Model({ meshVisible, ...props }) {
             material={materials.RAL6018}
           />
         </group>
-        <group
-          name="Lijeva_noga"
-          position={[0.013, 0.574, 1.2]}
-        >
+        <group name="Lijeva_noga" position={[0.013, 0.574, 1.2]}>
           <mesh
             receiveshadow
             castshadow
@@ -187,10 +173,7 @@ export function Model({ meshVisible, ...props }) {
             material={materials.RAL6018}
           />
         </group>
-        <group
-          name="Mjenjanje_sita_desno"
-          position={[0.01, 1.781, -1.24]}
-        >
+        <group name="Mjenjanje_sita_desno" position={[0.01, 1.781, -1.24]}>
           <mesh
             receiveshadow
             castshadow
@@ -214,10 +197,7 @@ export function Model({ meshVisible, ...props }) {
           material={materials.RAL7035}
           position={[0.01, 1.783, 1.241]}
         />
-        <group
-          name="Osnova"
-          position={[-0.376, 1.375, 0.752]}
-        >
+        <group name="Osnova" position={[-0.376, 1.375, 0.752]}>
           <mesh
             receiveshadow
             castshadow
@@ -251,14 +231,14 @@ export function Model({ meshVisible, ...props }) {
             castshadow
             name="Osnova001_4"
             geometry={nodes.Osnova001_4.geometry}
-            material={materials["PW-MT11000.002"]}
+            material={materials['PW-MT11000.002']}
           />
           <mesh
             receiveshadow
             castshadow
             name="Osnova001_5"
             geometry={nodes.Osnova001_5.geometry}
-            material={materials["shiny_galvanized.001"]}
+            material={materials['shiny_galvanized.001']}
           />
           <mesh
             receiveshadow
@@ -304,10 +284,7 @@ export function Model({ meshVisible, ...props }) {
           material={materials.RAL7016}
           position={[0.69, 0.563, 0]}
         />
-        <group
-          name="x_spustanje"
-          position={[0.014, 2.049, 0]}
-        >
+        <group name="x_spustanje" position={[0.014, 2.049, 0]}>
           <mesh
             receiveshadow
             castshadow
@@ -350,11 +327,7 @@ export function Model({ meshVisible, ...props }) {
             material={materials.PaletteMaterial001}
           />
         </group>
-        <group
-          name="x_Usipni_kos"
-          position={[-0.744, 2.731, 0]}
-          scale={0.001}
-        >
+        <group name="x_Usipni_kos" position={[-0.744, 2.731, 0]} scale={0.001}>
           <mesh
             receiveshadow
             castshadow
@@ -461,7 +434,7 @@ export function Model({ meshVisible, ...props }) {
           castshadow
           name="Cigle"
           geometry={nodes.Cigle.geometry}
-          material={materials["Material.002"]}
+          material={materials['Material.002']}
           position={[0.014, 0.637, 0]}
           scale={0.001}
         />
@@ -500,4 +473,4 @@ export function Model({ meshVisible, ...props }) {
   );
 }
 
-useGLTF.preload("/model-transformed.glb");
+useGLTF.preload('/asco-vs2300-configurator/model-transformed.glb');

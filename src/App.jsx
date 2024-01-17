@@ -1,6 +1,7 @@
-import "./App.css";
-import { Suspense, useEffect, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import './App.css';
+import { Suspense, useEffect, useRef, useState } from 'react';
+
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import {
   Environment,
   Html,
@@ -8,15 +9,16 @@ import {
   OrbitControls,
   Grid,
   ContactShadows,
-} from "@react-three/drei";
-import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { Popover } from "@mui/material";
+} from '@react-three/drei';
+import { Bloom, EffectComposer } from '@react-three/postprocessing';
+import { Popover } from '@mui/material';
 
-import { Model } from "./assets/Model";
-import LightNotification from "./assets/LightNotification";
-import { Sidebar } from "./components/Sidebar";
-import Rig from "./components/Rig";
-import io from "socket.io-client";
+import { Model } from './assets/Model';
+import LightNotification from './assets/LightNotification';
+import { Sidebar } from './components/Sidebar';
+import { VRButton, ARButton, XR, Controllers, Hands } from '@react-three/xr';
+
+import io from 'socket.io-client'; //stefan dependency
 
 // const socket = io("http://stefan.pikado.net");
 // const URL = process.env.NODE_ENV === "production" ? undefined : "http://stefan.pikado.net";
@@ -32,10 +34,7 @@ function Loader() {
       <div className="loader-container">
         {progress.toFixed(0)} % loaded
         <div className="loader-progress">
-          <div
-            className="loader-bar"
-            style={{ width: `${progress}%` }}
-          ></div>
+          <div className="loader-bar" style={{ width: `${progress}%` }}></div>
         </div>
       </div>
     </Html>
@@ -80,23 +79,11 @@ export default function App() {
   return (
     <div className="App">
       <div className="Canvas">
-        <Canvas
-          shadows
-          dpr={[1, 2]}
-          camera={{ position: [3, 2, 3] }}
-        >
-          <fog
-            attach="fog"
-            args={["black", 15, 21.5]}
-          />
+        <ARButton />
 
+        <Canvas shadows dpr={[1, 2]} camera={{ position: [3, 2, 3] }}>
+          <fog attach="fog" args={['black', 15, 21.5]} />
           <Suspense fallback={<Loader />}>
-            {/* <Stage
-            adjustCamera={1.5}
-            environment={null}
-            shadows={{ type: "accumulative", bias: -0.001 }}
-          > */}
-
             <Model
               position={[0, 0, 0]}
               meshVisible={meshVisible}
@@ -105,12 +92,11 @@ export default function App() {
               plej={nesto}
               pause={pause}
             />
-            <Rig />
+
             <LightNotification
               letThereBeLight={letThereBeLight}
               setVisible={setVisible}
             />
-
             <Grid
               renderOrder={-1}
               position={[0, -0.1, 0]}
@@ -123,12 +109,7 @@ export default function App() {
               fadeDistance={13}
               receiveShadow
             />
-
-            {/* <axesHelper /> */}
-
-            {/* </Stage> */}
           </Suspense>
-
           <OrbitControls
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 2.2}
@@ -137,10 +118,7 @@ export default function App() {
             target={[0, 1.5, 0]}
           />
           <EffectComposer disableNormalPass>
-            <Bloom
-              luminanceThreshold={1}
-              mipmapBlur
-            />
+            <Bloom luminanceThreshold={1} mipmapBlur />
           </EffectComposer>
           <Environment
             background
