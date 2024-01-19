@@ -3,9 +3,7 @@ import { useGLTF, useAnimations } from '@react-three/drei';
 
 export function Model({ meshVisible, ...props }) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF(
-    '/asco-vs2300-configurator/model-transformed.glb'
-  );
+  const { nodes, materials, animations } = useGLTF('/model-transformed.glb');
   const { actions } = useAnimations(animations, group);
   // console.log(animations);
   // onClick={(e) => actions.switch.play()
@@ -17,17 +15,26 @@ export function Model({ meshVisible, ...props }) {
       actions.switch.play();
     } else {
       actions.switch.stop();
-      // console.log("pritisnuo si stop");
     }
   }, [props.plej]);
 
   useEffect(() => {
-    if (props.pause === true) {
-      console.log('desilo se nesto');
-      actions.switch.halt(1);
+    if (props.newColor === true) {
+      materials.RAL7035.color.set(0x00ff00);
+      materials.RAL7016.color.set('#303030');
+      console.log(materials.RAL7035.color);
     } else {
-      // console.log("props pause je false");
+      materials.RAL7035.color.set('#17726F');
+      materials.RAL7016.color.set('#626161');
+      console.log(materials.RAL7035.color);
     }
+  }, [props.newColor]);
+
+  useEffect(() => {
+    console.log('Animation State:', actions.switch.isRunning());
+    props.pause
+      ? (actions.switch.timeScale = 0)
+      : (actions.switch.timeScale = 1);
   }, [props.pause]);
 
   return (
@@ -52,8 +59,7 @@ export function Model({ meshVisible, ...props }) {
         <group
           name="Duplo_sito"
           position={[-0.03, 1.551, -0.004]}
-          scale={0.001}
-        >
+          scale={0.001}>
           <mesh
             receiveShadow
             castShadow
@@ -310,8 +316,7 @@ export function Model({ meshVisible, ...props }) {
         <group
           name="x_Usipni_kos"
           position={[-0.744, 2.031, 0]}
-          visible={props.meshTrichterVisible}
-        >
+          visible={props.meshTrichterVisible}>
           <mesh
             receiveshadow
             castshadow
@@ -441,8 +446,7 @@ export function Model({ meshVisible, ...props }) {
         <group
           visible={meshVisible}
           name="x_precka"
-          position={[0.03, 2.033, 0]}
-        >
+          position={[0.03, 2.033, 0]}>
           <mesh
             receiveshadow
             castshadow
@@ -473,4 +477,4 @@ export function Model({ meshVisible, ...props }) {
   );
 }
 
-useGLTF.preload('/asco-vs2300-configurator/model-transformed.glb');
+useGLTF.preload('/model-transformed.glb');

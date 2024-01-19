@@ -11,12 +11,10 @@ import {
   ContactShadows,
 } from '@react-three/drei';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import { Popover } from '@mui/material';
 
 import { Model } from './assets/Model';
 import LightNotification from './assets/LightNotification';
 import { Sidebar } from './components/Sidebar';
-import { VRButton, ARButton, XR, Controllers, Hands } from '@react-three/xr';
 
 import io from 'socket.io-client'; //stefan dependency
 
@@ -47,7 +45,7 @@ export default function App() {
   const [nesto, setNesto] = useState(false);
   const [pause, setPause] = useState(false);
   const [letThereBeLight, setletThereBeLight] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [newColor, setNewColor] = useState(false);
 
   // useEffect(() => {
   //   const handle = (temp) => {
@@ -76,12 +74,14 @@ export default function App() {
     setPause(!pause);
   };
 
+  const changeColor = () => {
+    setNewColor(!newColor);
+  };
+
   return (
     <div className="App">
       <div className="Canvas">
-        <ARButton />
-
-        <Canvas shadows dpr={[1, 2]} camera={{ position: [3, 2, 3] }}>
+        <Canvas shadows dpr={[1, 2]} camera={{ position: [3, 2, 3], fob: 45 }}>
           <fog attach="fog" args={['black', 15, 21.5]} />
           <Suspense fallback={<Loader />}>
             <Model
@@ -91,21 +91,19 @@ export default function App() {
               shadows
               plej={nesto}
               pause={pause}
+              newColor={newColor}
             />
 
-            <LightNotification
-              letThereBeLight={letThereBeLight}
-              setVisible={setVisible}
-            />
+            <LightNotification letThereBeLight={letThereBeLight} />
             <Grid
               renderOrder={-1}
               position={[0, -0.1, 0]}
               infiniteGrid
-              cellSize={0.5}
-              cellThickness={1}
-              sectionSize={5}
-              sectionThickness={1.5}
-              sectionColor={[0.1, 0.5, 9]}
+              cellSize={0.1}
+              cellThickness={0.3}
+              cellColor={'gray'}
+              sectionSize={1}
+              sectionColor={[4, 2, 1]}
               fadeDistance={13}
               receiveShadow
             />
@@ -120,27 +118,34 @@ export default function App() {
           <EffectComposer disableNormalPass>
             <Bloom luminanceThreshold={1} mipmapBlur />
           </EffectComposer>
-          <Environment
-            background
-            files="img/venice_sunset_1k.hdr"
-            blur={0.8}
-            // ground={{
-            //   height: 10,
-            //   radius: 120,
-            //   scale: 22,
-            // }}
-          />
+
+          {letThereBeLight ? (
+            <>
+              <Environment
+                background
+                files="img/venice_sunset_1k.hdr"
+                blur={0.8}
+                // ground={{
+                //   height: 10,
+                //   radius: 120,
+                //   scale: 22,
+                // }}
+              />
+            </>
+          ) : (
+            <color attach="background" args={['black']} />
+          )}
           <ContactShadows />
         </Canvas>
       </div>
-      <Popover open={visible}>TEST</Popover>
       <div className="Sidebar">
         <Sidebar
           toggleMesh={toggleMesh}
+          handleTrichter={handleTrichter}
           plej={plej}
           pause={pause2}
           letThereBeLight={upaliSvejtlo}
-          handleTrichter={handleTrichter}
+          changeColor={changeColor}
         />
       </div>
     </div>
