@@ -12,6 +12,8 @@ export function Model({ meshVisible, ...props }) {
 
   useEffect(() => {
     if (props.plej === true) {
+      actions.switch.reset();
+      actions.switch.timeScale = 1;
       actions.switch.play();
     } else {
       actions.switch.stop();
