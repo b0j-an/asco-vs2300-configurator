@@ -57,6 +57,8 @@ export function Sidebar({ toggleMesh, ...props }) {
 
   return (
     <div className="Sidebar">
+      <img src="/img/studio.png" />
+      <h2>Made for</h2>
       <img src="/img/ascoLogo.png" />
 
       <div className="sidebar-inside-top">
@@ -157,6 +159,12 @@ export function Sidebar({ toggleMesh, ...props }) {
         </button>
         <button className="btn" onClick={props.changeColor}>
           Change Color
+        </button>
+
+        <button
+          className="btn"
+          onClick={() => window.open('https://www.studio1620.com/3masine')}>
+          PROJECT 2
         </button>
       </div>
       <p>asco-bh.com</p>

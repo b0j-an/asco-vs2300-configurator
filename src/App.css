@@ -38,7 +38,7 @@
 
 .Sidebar > img {
   width: 350px;
-  height: 150px;
+  height: auto;
 }
 
 .sidebar-inside-top {

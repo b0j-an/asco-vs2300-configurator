@@ -22,12 +22,12 @@ export function Model({ meshVisible, ...props }) {
 
   useEffect(() => {
     if (props.newColor === true) {
-      materials.RAL7035.color.set(0x00ff00);
-      materials.RAL7016.color.set('#303030');
+      materials.RAL7035.color.set('#005387');
+      materials.RAL7016.color.set('#383e42');
       console.log(materials.RAL7035.color);
     } else {
-      materials.RAL7035.color.set('#17726F');
-      materials.RAL7016.color.set('#626161');
+      materials.RAL7035.color.set('#85000f');
+      materials.RAL7016.color.set('#383e42');
       console.log(materials.RAL7035.color);
     }
   }, [props.newColor]);
