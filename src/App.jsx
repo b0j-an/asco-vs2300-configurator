@@ -11,6 +11,8 @@ import {
   ContactShadows,
   PresentationControls,
   PerspectiveCamera,
+  Bounds,
+  MeshReflectorMaterial,
 } from '@react-three/drei';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
 
@@ -66,36 +68,38 @@ export default function App() {
     setNesto(!nesto);
   };
 
-  const dist = () => {
-    console.log('dist008');
-    setEnableControl(!enableControl);
-  };
-
-  // useEffect(() => {
-  //   console.log(enableControl);
-  // }, [enableControl]);
-
   return (
     <div className="App">
       <div className="Canvas">
-        <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 3, 4] }}>
-          <fog attach="fog" args={['black', 15, 21.5]} />
+        <Canvas
+          camera={{
+            fov: 30,
+
+            position: [0, 3, 6],
+          }}
+          shadows
+          dpr={[1, 2]}>
+          {/* <fog attach="fog" args={['black', 15, 21.5]} /> */}
           <Suspense fallback={<Loader />}>
             {/* <CameraControls lerpLookAt-y={2} /> */}
             <PresentationControls enabled={enableControl} polar={[0, 0]}>
-              <Model
-                position={[0, 0, 0]}
-                meshVisible={meshVisible}
-                meshTrichterVisible={meshTrichterVisible}
-                shadows
-                plej={nesto}
-                pause={pause}
-                newColor={newColor}
-              />
+              <Bounds fit margin={2.5}>
+                <Model
+                  meshVisible={meshVisible}
+                  meshTrichterVisible={meshTrichterVisible}
+                  shadows
+                  plej={nesto}
+                  pause={pause}
+                  newColor={newColor}
+                />
+              </Bounds>
             </PresentationControls>
 
-            <LightNotification dist={dist} letThereBeLight={letThereBeLight} />
-            <Grid
+            <LightNotification
+              dist={() => setEnableControl(!enableControl)}
+              letThereBeLight={letThereBeLight}
+            />
+            {/* <Grid
               renderOrder={-1}
               position={[0, -0.1, 0]}
               infiniteGrid
@@ -106,7 +110,11 @@ export default function App() {
               sectionColor={[4, 2, 1]}
               fadeDistance={13}
               receiveShadow
-            />
+            /> */}
+            <mesh position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+              <planeGeometry args={[10, 10, 10]} />
+              <MeshReflectorMaterial color={'#2C2626'} />
+            </mesh>
           </Suspense>
           {/* <OrbitControls
             minPolarAngle={Math.PI / 4}

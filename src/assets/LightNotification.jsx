@@ -60,6 +60,8 @@ export default function LightNotification({ letThereBeLight, ...props }) {
 
   return (
     <group
+      onPointerDown={props.dist}
+      onPointerUp={props.dist}
       // onClick={() => setVisible((prev) => !prev)}
       visible={!letThereBeLight}>
       <mesh ref={stripe} scale={0.03} position={[-0.5, 1.3, 1.3]}>
@@ -74,10 +76,11 @@ export default function LightNotification({ letThereBeLight, ...props }) {
       </mesh>
 
       <mesh
-        onClick={props.dist}
+        // onClick={props.dist}
+
         ref={cube}
         scale={0.2}
-        position={[0, 1, 1.8]}
+        position={[0, 0, 1.8]}
         visible={true}
         {...bind()}>
         <sphereGeometry />
