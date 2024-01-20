@@ -79,11 +79,11 @@ export default function App() {
           }}
           shadows
           dpr={[1, 2]}>
-          {/* <fog attach="fog" args={['black', 15, 21.5]} /> */}
+          <fog attach="fog" args={['black', 10, 20]} />
           <Suspense fallback={<Loader />}>
             {/* <CameraControls lerpLookAt-y={2} /> */}
             <PresentationControls enabled={enableControl} polar={[0, 0]}>
-              <Bounds fit margin={2.5}>
+              <Bounds fit margin={2}>
                 <Model
                   meshVisible={meshVisible}
                   meshTrichterVisible={meshTrichterVisible}
@@ -113,7 +113,7 @@ export default function App() {
             /> */}
             <mesh position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
               <planeGeometry args={[10, 10, 10]} />
-              <MeshReflectorMaterial color={'#2C2626'} />
+              <MeshReflectorMaterial mirror={1} color={'#2C2626'} />
             </mesh>
           </Suspense>
           {/* <OrbitControls
@@ -123,9 +123,9 @@ export default function App() {
             maxDistance={8}
             target={[0, 1.5, 0]}
           /> */}
-          <EffectComposer disableNormalPass>
+          {/* <EffectComposer disableNormalPass>
             <Bloom luminanceThreshold={1} mipmapBlur />
-          </EffectComposer>
+          </EffectComposer> */}
 
           {letThereBeLight ? (
             <>

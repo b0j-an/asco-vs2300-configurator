@@ -12,14 +12,14 @@ import { useDrag } from '@use-gesture/react';
 extend(geometry);
 
 export default function LightNotification({ letThereBeLight, ...props }) {
-  const cube = useRef();
+  const cubeLightRef = useRef();
   const light = useRef();
   const lightFront = useRef();
   const stripe = useRef();
 
-  const bind = useDrag(({ offset: [x, y] }) => {
-    cube.current.position.x = x / 150;
-    cube.current.position.y = -y / 300;
+  const bind = useDrag(({ offset: [x, y] = [0, 0.5] }) => {
+    cubeLightRef.current.position.x = x / 150;
+    cubeLightRef.current.position.y = -y / 300;
   });
 
   // useFrame((state, delta) => {
@@ -41,7 +41,7 @@ export default function LightNotification({ letThereBeLight, ...props }) {
 
   //   // na pomjeranje misa
   //   easing.dampE(
-  //     cube.current.position,
+  //     cubeLightRef.current.position,
   //     [+1, state.pointer.y + 1.7, -state.pointer.x * 1.5],
   //     1,
   //     1
@@ -60,8 +60,6 @@ export default function LightNotification({ letThereBeLight, ...props }) {
 
   return (
     <group
-      onPointerDown={props.dist}
-      onPointerUp={props.dist}
       // onClick={() => setVisible((prev) => !prev)}
       visible={!letThereBeLight}>
       <mesh ref={stripe} scale={0.03} position={[-0.5, 1.3, 1.3]}>
@@ -76,16 +74,15 @@ export default function LightNotification({ letThereBeLight, ...props }) {
       </mesh>
 
       <mesh
-        // onClick={props.dist}
-
-        ref={cube}
+        onClick={props.dist}
+        ref={cubeLightRef}
         scale={0.2}
-        position={[0, 0, 1.8]}
+        position={[0, 1, 1.8]}
         visible={true}
         {...bind()}>
         <sphereGeometry />
         <meshBasicMaterial color={[2, 2, 2]} visible={true} />
-        <pointLight intensity={30} color={[2, 2, 1]} distance={3} />
+        <pointLight intensity={10} color={[2, 2, 1]} distance={3} />
       </mesh>
 
       {/* <spotLight
@@ -97,11 +94,11 @@ export default function LightNotification({ letThereBeLight, ...props }) {
         shadow-mapSize={1024}
         shadow-bias={-0.001}></spotLight> */}
 
-      {/* <mesh ref={cube} scale={0.07} position={[1, 0.7, 1]} visible={true}>
+      {/* <mesh ref={cubeLightRef} scale={0.07} position={[1, 0.7, 1]} visible={true}>
         <boxGeometry />
         <meshBasicMaterial color={[2, 2, 2]} visible={false} />
         <pointLight
-          ref={smallCube}
+          ref={smallcubeLightRef}
           intensity={1}
           color={[2, 2, 1]}
           distance={2}
