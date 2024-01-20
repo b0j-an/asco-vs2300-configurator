@@ -57,6 +57,7 @@ export function Sidebar({ toggleMesh, ...props }) {
 
   return (
     <div className="Sidebar">
+      <h2>Demo Project / Prototype 2</h2>
       <img src="/img/studio.png" />
       <h2>Made for</h2>
       <img src="/img/ascoLogo.png" />

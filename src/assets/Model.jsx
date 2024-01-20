@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useGLTF, useAnimations } from '@react-three/drei';
+import {
+  useGLTF,
+  useAnimations,
+  PresentationControls,
+} from '@react-three/drei';
+import { useDrag } from '@use-gesture/react';
+import { useFrame } from '@react-three/fiber';
 
 export function Model({ meshVisible, ...props }) {
   const group = useRef();
@@ -24,23 +30,20 @@ export function Model({ meshVisible, ...props }) {
     if (props.newColor === true) {
       materials.RAL7035.color.set('#005387');
       materials.RAL7016.color.set('#383e42');
-      console.log(materials.RAL7035.color);
     } else {
       materials.RAL7035.color.set('#85000f');
       materials.RAL7016.color.set('#383e42');
-      console.log(materials.RAL7035.color);
     }
   }, [props.newColor]);
 
   useEffect(() => {
-    console.log('Animation State:', actions.switch.isRunning());
     props.pause
       ? (actions.switch.timeScale = 0)
       : (actions.switch.timeScale = 1);
   }, [props.pause]);
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group rotation-y={-Math.PI / 2} ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group name="Desna_noga" position={[0.005, 0.574, -1.2]}>
           <mesh

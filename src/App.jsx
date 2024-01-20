@@ -6,9 +6,11 @@ import {
   Environment,
   Html,
   useProgress,
-  OrbitControls,
+  CameraControls,
   Grid,
   ContactShadows,
+  PresentationControls,
+  PerspectiveCamera,
 } from '@react-three/drei';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
 
@@ -46,6 +48,7 @@ export default function App() {
   const [pause, setPause] = useState(false);
   const [letThereBeLight, setletThereBeLight] = useState(false);
   const [newColor, setNewColor] = useState(false);
+  const [enableControl, setEnableControl] = useState(true);
 
   // useEffect(() => {
   //   const handle = (temp) => {
@@ -56,45 +59,42 @@ export default function App() {
   //   return () => socket?.off("TEMP_HUMID_UPDATE", (data) => handle(data.temp));
   // }, []);
 
-  const toggleMesh = () => {
-    setMeshVisible(!meshVisible);
-  };
-
-  const handleTrichter = () => {
-    setTrichterVisible(!meshTrichterVisible);
-  };
-
   const upaliSvejtlo = () => {
     setletThereBeLight(!letThereBeLight);
   };
   const plej = () => {
     setNesto(!nesto);
   };
-  const pause2 = () => {
-    setPause(!pause);
+
+  const dist = () => {
+    console.log('dist008');
+    setEnableControl(!enableControl);
   };
 
-  const changeColor = () => {
-    setNewColor(!newColor);
-  };
+  // useEffect(() => {
+  //   console.log(enableControl);
+  // }, [enableControl]);
 
   return (
     <div className="App">
       <div className="Canvas">
-        <Canvas shadows dpr={[1, 2]} camera={{ position: [3, 2, 3], fob: 45 }}>
+        <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 3, 4] }}>
           <fog attach="fog" args={['black', 15, 21.5]} />
           <Suspense fallback={<Loader />}>
-            <Model
-              position={[0, 0, 0]}
-              meshVisible={meshVisible}
-              meshTrichterVisible={meshTrichterVisible}
-              shadows
-              plej={nesto}
-              pause={pause}
-              newColor={newColor}
-            />
+            {/* <CameraControls lerpLookAt-y={2} /> */}
+            <PresentationControls enabled={enableControl} polar={[0, 0]}>
+              <Model
+                position={[0, 0, 0]}
+                meshVisible={meshVisible}
+                meshTrichterVisible={meshTrichterVisible}
+                shadows
+                plej={nesto}
+                pause={pause}
+                newColor={newColor}
+              />
+            </PresentationControls>
 
-            <LightNotification letThereBeLight={letThereBeLight} />
+            <LightNotification dist={dist} letThereBeLight={letThereBeLight} />
             <Grid
               renderOrder={-1}
               position={[0, -0.1, 0]}
@@ -108,13 +108,13 @@ export default function App() {
               receiveShadow
             />
           </Suspense>
-          <OrbitControls
+          {/* <OrbitControls
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 2.2}
             minDistance={3}
             maxDistance={8}
             target={[0, 1.5, 0]}
-          />
+          /> */}
           <EffectComposer disableNormalPass>
             <Bloom luminanceThreshold={1} mipmapBlur />
           </EffectComposer>
@@ -140,12 +140,12 @@ export default function App() {
       </div>
       <div className="Sidebar">
         <Sidebar
-          toggleMesh={toggleMesh}
-          handleTrichter={handleTrichter}
+          toggleMesh={() => setMeshVisible(!meshVisible)}
+          handleTrichter={() => setTrichterVisible(!meshTrichterVisible)}
           plej={plej}
-          pause={pause2}
+          pause={() => setPause(!pause)}
           letThereBeLight={upaliSvejtlo}
-          changeColor={changeColor}
+          changeColor={() => setNewColor(!newColor)}
         />
       </div>
     </div>
