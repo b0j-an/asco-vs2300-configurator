@@ -1,6 +1,6 @@
 import './App.css';
 import { Suspense, useEffect, useRef, useState } from 'react';
-
+import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import {
   Environment,
@@ -13,12 +13,16 @@ import {
   PerspectiveCamera,
   Bounds,
   MeshReflectorMaterial,
+  useScroll,
+  useTexture,
+  Center,
 } from '@react-three/drei';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
 
 import { Model } from './assets/Model';
 import LightNotification from './assets/LightNotification';
 import { Sidebar } from './components/Sidebar';
+import './components/util';
 
 import io from 'socket.io-client'; //stefan dependency
 
@@ -82,6 +86,9 @@ export default function App() {
           <fog attach="fog" args={['black', 10, 20]} />
           <Suspense fallback={<Loader />}>
             {/* <CameraControls lerpLookAt-y={2} /> */}
+
+            <Banner position={[0, 0.5, 0]} />
+
             <PresentationControls enabled={enableControl} polar={[0, 0]}>
               <Bounds fit margin={2}>
                 <Model
@@ -157,5 +164,29 @@ export default function App() {
         />
       </div>
     </div>
+  );
+}
+
+function Banner(props) {
+  const ref = useRef();
+  const texture = useTexture('./img/ascoLogo.png');
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+
+  useFrame((state, delta) => {
+    ref.current.material.map.offset.x += delta / 5;
+    ref.current.material.time.value += delta / 5;
+  });
+  return (
+    <mesh ref={ref} {...props}>
+      <cylinderGeometry args={[2.9, 2.7, 0.2, 128, 16, true]} />
+      <meshSineMaterial
+        map={texture}
+        map-anisotropy={16}
+        map-repeat={[30, 1]}
+        side={THREE.DoubleSide}
+        toneMapped={false}
+        color="gray"
+      />
+    </mesh>
   );
 }

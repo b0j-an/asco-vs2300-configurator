@@ -37,7 +37,7 @@
 }
 
 .Sidebar > img {
-  width: 350px;
+  width: 250px;
   height: auto;
 }
 
@@ -105,7 +105,7 @@ p {
   position: relative;
   transition: all 1s;
   overflow: hidden;
-  margin: 10px 0px;
+  margin: 5px 0px;
 }
 
 .btn:hover {

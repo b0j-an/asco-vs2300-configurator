@@ -3,6 +3,8 @@ import {
   useGLTF,
   useAnimations,
   PresentationControls,
+  useTexture,
+  useScroll,
 } from '@react-three/drei';
 import { useDrag } from '@use-gesture/react';
 import { useFrame } from '@react-three/fiber';
